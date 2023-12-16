@@ -1,4 +1,4 @@
-import  { useState , useEffect }  from "react";
+import React , {useState , useEffect } from "react";
 import axios from "axios";
 import './list.css'
 import Pokecard from "../pokecard/Pokecard";
@@ -73,6 +73,15 @@ import Pokecard from "../pokecard/Pokecard";
     getData();
    },[pokemonListState.pokedexURL])
 
+
+   const scrollToTop = () =>{
+    
+      window.scrollTo({
+         top:0,
+         behavior:"smooth"
+      })
+   }
+
     return(
  
         <div className="list-wrapper"> 
@@ -87,11 +96,13 @@ import Pokecard from "../pokecard/Pokecard";
          
          <div className="control">
          <button disabled = {pokemonListState.prevURL == null} onClick={()=>{
-            setPokemonlistState({...pokemonListState, pokedexURL:pokemonListState.prevURL , pageNo:pokemonListState.pageNo-1})
+            setPokemonlistState({...pokemonListState, pokedexURL:pokemonListState.prevURL , pageNo:pokemonListState.pageNo-1}),
+            scrollToTop()
             }}>Previous</button>
           { pokemonListState.pageNo }
          <button disabled = {pokemonListState.nextURL == null} onClick={()=>{
-            setPokemonlistState({...pokemonListState, pokedexURL:pokemonListState.nextURL, pageNo:pokemonListState.pageNo+1})
+            setPokemonlistState({...pokemonListState, pokedexURL:pokemonListState.nextURL, pageNo:pokemonListState.pageNo+1}),
+            scrollToTop()
             }}>Next</button>
          </div>
          { pokemonListState.isLoading ? ' data downladed' : '  loading..'}
