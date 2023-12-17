@@ -27,11 +27,6 @@ import "../details/detail.css"
                 types:Data.data.types.map((t)=> t.type.name)
 
             });
-
-            
-            
-            
-
            }
             catch (error)
            {

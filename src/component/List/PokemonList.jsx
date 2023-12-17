@@ -15,12 +15,14 @@ import Pokecard from "../pokecard/Pokecard";
 
 
    const [pokemonListState , setPokemonlistState] = useState({
-    isLoading:false,
+
+    isLoading:true,
     pokemonList:[],
     pokedexURL:'https://pokeapi.co/api/v2/pokemon',
     prevURL:"",
     nextURL:"",
     pageNo: 1,
+
 
    })
     
@@ -30,19 +32,17 @@ import Pokecard from "../pokecard/Pokecard";
          const response = await axios.get(pokemonListState.pokedexURL);
          const pokemonResult = response.data.results;
    
-         console.log();
-
          setPokemonlistState( (state) => ({ 
             ...state,
             nextURL:response.data.next ,
             prevURL:response.data.previous,
+            isLoading: true,
+            pokemonList: [],
            }))    
 
-           console.log(pokemonListState.nextURL)
+         const pokemonPromise = pokemonResult.map((pokemon) => axios.get(pokemon.url))
 
-         const re = pokemonResult.map((pokemon)=> axios.get(pokemon.url))
-
-         const pokemonData = await axios.all(re)
+         const pokemonData = await axios.all(pokemonPromise)
          console.log(pokemonData);
 
          const ress = pokemonData.map((pokeData)=>{
@@ -59,12 +59,11 @@ import Pokecard from "../pokecard/Pokecard";
          setPokemonlistState( (state) => ({ 
              ...state,
              pokemonList:ress ,
-             isLoading:true
+             isLoading:false
             }))        
          
 
 
-         console.log(ress[0].id)
 
    } 
 
@@ -75,7 +74,8 @@ import Pokecard from "../pokecard/Pokecard";
 
 
    const scrollToTop = () =>{
-    
+   
+   
       window.scrollTo({
          top:0,
          behavior:"smooth"
@@ -85,8 +85,8 @@ import Pokecard from "../pokecard/Pokecard";
     return(
  
         <div className="list-wrapper"> 
-        List : 
-
+      
+      { pokemonListState.isLoading ? <div class="lds-ring"><div></div><div></div><div></div><div></div></div> : <></> }
 
         <div className="wrapper"> 
         {pokemonListState.pokemonList.map((individual)=> <Pokecard name={individual.name} image={individual.image} type={individual.type} key={individual.id} id={individual.id} /> ) }
@@ -105,7 +105,7 @@ import Pokecard from "../pokecard/Pokecard";
             scrollToTop()
             }}>Next</button>
          </div>
-         { pokemonListState.isLoading ? ' data downladed' : '  loading..'}
+         
         </div>
      
     );
