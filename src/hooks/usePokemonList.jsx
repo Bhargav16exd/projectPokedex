@@ -57,14 +57,36 @@ function usePokemonList(incomingData ){
         }
         else if( incomingData.pageType == 'typePage'){
         
-         console.log(pokemonListState.pokedexURL)
          const response = await axios.get(pokemonListState.pokedexURL);
-         console.log(response.data.pokemon)
+         const dataArray = response.data.pokemon
+         const data = dataArray.map((dataArray)=> dataArray.pokemon.url)
+         const sliceData = data.slice(0,10);
+         const promiseArray =  sliceData.map((pokemon)=> axios.get(pokemon)) 
+         const getDataFromPromiseArray = await axios.all(promiseArray);
+
+         console.log(getDataFromPromiseArray)
+
+         // Copied from above 
+          
+        const ress = getDataFromPromiseArray.map((pokeData)=>{
+        const pokemon = pokeData.data;
+ 
+            return {
+                name : pokemon.name,
+                image : pokemon.sprites.other.dream_world.front_default,
+                types : pokemon.types,
+                id : pokemon.id
+            }
+         })
+         setPokemonlistState( (state) => ({ 
+             ...state,
+             pokemonList:ress ,
+             isLoading:false
+            })) 
+
+         
         }
         
-    
-         
-    
   } 
 
   useEffect( () => {

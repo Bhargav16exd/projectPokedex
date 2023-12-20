@@ -6,11 +6,9 @@ function Pokedex ({API}){
 return(
      
     <div className="pokedex-wrapper">
-    <h1 className="h1">Pokedex</h1>
-    <Search/>
     
     {
-        API ? <GetList API={API}/> : <GetList/>
+        API ?  <GetList API={API}/> : ( <> <h1 className="h1">Pokedex</h1> <Search/> <GetList/> </> )
     }
    
     </div>

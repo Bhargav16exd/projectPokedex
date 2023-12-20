@@ -8,9 +8,11 @@ import { useParams } from "react-router-dom";
  function GetList({API}){
    
  
+
   if(API){
    const type = useParams();
    API = `https://pokeapi.co/api/v2/type/${type.type}`
+   
   }
    
    const [pokemonListState , setPokemonlistState] = usePokemonList( API ? {url:API , pageType:'typePage'}: { url:"https://pokeapi.co/api/v2/pokemon" , pageType:'homePage' } );
@@ -24,16 +26,18 @@ import { useParams } from "react-router-dom";
 
     return(
  
-        <div className="list-wrapper"> 
+        <div className={ API ?  "list-wrapper-typePage" : "list-wrapper-mainPage"}> 
       
        { pokemonListState.isLoading ? <div className="lds-ring"><div></div><div></div><div></div><div></div></div> : <></> }
 
         <div className="wrapper"> 
-        {pokemonListState.pokemonList.map((individual)=> <Pokecard name={individual.name} image={individual.image} type={individual.type} key={individual.id} id={individual.id} /> ) }
+        {pokemonListState.pokemonList.map((individual)=> <Pokecard name={individual.name} image={individual.image} type={individual.type} key={individual.id} id={individual.id} 
+         flag={API? true: false}/>) }
 
        
         </div>
          
+         {API ? <></> : 
          <div className="control">
          <button 
          disabled = {pokemonListState.prevURL == null} 
@@ -47,7 +51,8 @@ import { useParams } from "react-router-dom";
             scrollToTop()
             }}>Next</button>
          </div>
-         
+         }
+
         </div>
      
     );

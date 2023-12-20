@@ -1,9 +1,14 @@
-.list-wrapper{
+.list-wrapper-mainPage{
+  border: 1px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 2rem auto;
+}
+
+.list-wrapper-typePage{
+  background-color: #111111;
 }
 .wrapper{
     display: flex;
