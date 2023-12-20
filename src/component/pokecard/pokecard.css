@@ -9,6 +9,7 @@
    flex-direction: column; 
 }
 .pokemon{
+   background-color:#ff94e0;
    font-weight: 900;
    width: 400px;
    color: #ffffff;

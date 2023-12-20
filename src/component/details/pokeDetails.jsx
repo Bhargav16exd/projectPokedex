@@ -51,6 +51,7 @@ import "../details/detail.css"
         return(
             
            <div className="wrap-page">
+            
             <div className="pokewrap">
              <h2 className="name">Name : {pokemonData.name}</h2>
              {load ?  <span className="">Loading</span>: null}
