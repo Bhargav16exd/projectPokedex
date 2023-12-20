@@ -11,7 +11,7 @@ import "../details/detail.css"
        const [ load , setLoad] = useState(true);
        const caller = () =>{
         setLoad(false)
-    }
+        }
 
        async function getData(){
         try {
