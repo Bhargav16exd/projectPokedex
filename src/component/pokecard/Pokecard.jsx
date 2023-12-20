@@ -25,6 +25,7 @@ function Pokecard ({ name , image , type , id}) {
          <img src={image} alt="" className="img" onLoad={caller} />
 
         <p>{type}</p>
+        
         </div>
 
         </Link>

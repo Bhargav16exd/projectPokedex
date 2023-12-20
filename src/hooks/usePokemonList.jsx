@@ -1,22 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function usePokemonList(url){
+function usePokemonList(incomingData ){
  
     const [pokemonListState , setPokemonlistState] = useState({
 
         isLoading:true,
         pokemonList:[],
-        pokedexURL:url,
+        pokedexURL:incomingData.url,
         prevURL:"",
         nextURL:"",
         pageNo: 1,
     })
+    
 
     async function getData (){
-      
-
+       
+        
+        
+        if( incomingData.pageType == 'homePage' )
+        {
+        
         const response = await axios.get(pokemonListState.pokedexURL);
+        console.log(response)
+            
         const pokemonResult = response.data.results;
   
         setPokemonlistState( (state) => ({ 
@@ -25,10 +32,9 @@ function usePokemonList(url){
            prevURL:response.data.previous,
            isLoading: true,
            pokemonList: [],
-          }))    
+          }))  
 
         const pokemonPromise = pokemonResult.map((pokemon) => axios.get(pokemon.url))
-
         const pokemonData = await axios.all(pokemonPromise)
         console.log(pokemonData);
 
@@ -42,12 +48,22 @@ function usePokemonList(url){
                id : pokemon.id
            }
         })
-
         setPokemonlistState( (state) => ({ 
             ...state,
             pokemonList:ress ,
             isLoading:false
-           }))   
+           })) 
+
+        }
+        else if( incomingData.pageType == 'typePage'){
+        
+         console.log(pokemonListState.pokedexURL)
+         const response = await axios.get(pokemonListState.pokedexURL);
+         console.log(response.data.pokemon)
+        }
+        
+    
+         
     
   } 
 
@@ -55,10 +71,7 @@ function usePokemonList(url){
     getData();
    },[pokemonListState.pokedexURL])
   
-      
-
-  
-     return [pokemonListState , setPokemonlistState];    
+ return [pokemonListState , setPokemonlistState];    
 }
 
 export default usePokemonList;

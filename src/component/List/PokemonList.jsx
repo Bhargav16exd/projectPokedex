@@ -1,13 +1,20 @@
 import React , {useState , useEffect } from "react";
-import axios from "axios";
 import './list.css'
 import Pokecard from "../pokecard/Pokecard";
 import usePokemonList from "../../hooks/usePokemonList";
+import { useParams } from "react-router-dom";
 
- function GetList(){
 
- const [pokemonListState , setPokemonlistState] = usePokemonList('https://pokeapi.co/api/v2/pokemon');
-
+ function GetList({API}){
+   
+ 
+  if(API){
+   const type = useParams();
+   API = `https://pokeapi.co/api/v2/type/${type.type}`
+  }
+   
+   const [pokemonListState , setPokemonlistState] = usePokemonList( API ? {url:API , pageType:'typePage'}: { url:"https://pokeapi.co/api/v2/pokemon" , pageType:'homePage' } );
+  
    const scrollToTop = () =>{
       window.scrollTo({
          top:0,

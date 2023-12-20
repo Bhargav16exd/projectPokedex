@@ -9,6 +9,8 @@ import "../details/detail.css"
 
        const [pokemonData , setPokemonData] = useState({ types:[]});
        const [ load , setLoad] = useState(true);
+       const [type , setType] = useState([]);
+       const [ flag ,setFlag] = useState(false);
        const caller = () =>{
         setLoad(false)
         }
@@ -32,23 +34,42 @@ import "../details/detail.css"
            {
             return("Cannot Fetch Data Try Again Later");
            }
+           
+           console.log(pokemonData.types)
+           if(pokemonData.types){
+            console.log(`flag`)
+            setType(pokemonData.types[0])
+           }
+           console.log(type)
+           
+
        }
 
-       useEffect(()=>{ getData();},[])
-
+       useEffect(()=>{ getData();}, [type])
       
        
         return(
             
-           <div className="pokewrap">
+           <div className="wrap-page">
+            <div className="pokewrap">
              <h2 className="name">Name : {pokemonData.name}</h2>
              {load ?  <span className="">Loading</span>: null}
              <img src={pokemonData.image} alt="" className="image" onLoad={caller} />
              <div className="height">Height : {pokemonData.height}</div>
              <div className="weight">Weight : {pokemonData.weight}</div>
-             <div className="type"> Types :{<ul>{pokemonData.types.map((t)=> <li>{t}</li>)}</ul>}</div>
+             <div className="type"> Types :{<ul>{pokemonData.types.map((t)=> <li key={t}>{t}</li>)}</ul>}</div>
+            
+            {
+            
+            pokemonData.types ?  <> <Link to={`/pokemon/type/${type}`}>
 
+             <button className="Explorebtn">See More {type} Type Pokemon</button>
+             </Link></> :<></>
+             
+            }
+            
            </div> 
+           </div>
         );
     }
 

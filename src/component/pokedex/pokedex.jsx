@@ -1,14 +1,18 @@
 import GetList from '../List/PokemonList';
 import Search from '../search/Search';
 import './pokedex.css'
-function Pokedex (){
- 
+function Pokedex ({API}){
+
 return(
      
     <div className="pokedex-wrapper">
     <h1 className="h1">Pokedex</h1>
     <Search/>
-    <GetList/>
+    
+    {
+        API ? <GetList API={API}/> : <GetList/>
+    }
+   
     </div>
 );
 
