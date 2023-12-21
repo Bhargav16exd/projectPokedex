@@ -16,7 +16,7 @@ import usePokeDetails from "../../hooks/usePokeDetails";
             
             {pokeDetails.searchLoad ? 
 
-            <span class="loadder">Loading ...</span> :
+            <span className="loadder">Loading ...</span> :
              
             <div className="pokewrap">
              <h2 className="name">Name : {pokeDetails.pokemonData.name}</h2>
