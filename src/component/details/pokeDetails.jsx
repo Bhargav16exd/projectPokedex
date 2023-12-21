@@ -3,17 +3,21 @@ import { Link, useParams } from "react-router-dom";
 import "../details/detail.css"
 import usePokeDetails from "../../hooks/usePokeDetails";
 
-     function Details (){
+     function Details ({dataName}){
 
         const {id} = useParams()
 
-        const [pokeDetails ,caller] = usePokeDetails(id);
+        const [pokeDetails ,caller] = usePokeDetails(id ,dataName);
       
     
         return(
             
            <div className="wrap-page">
             
+            {pokeDetails.searchLoad ? 
+
+            <span class="loadder">Loading ...</span> :
+             
             <div className="pokewrap">
              <h2 className="name">Name : {pokeDetails.pokemonData.name}</h2>
             { pokeDetails.load ?  <span className="">Loading</span>: null}
@@ -30,8 +34,9 @@ import usePokeDetails from "../../hooks/usePokeDetails";
              </Link></> :<></>
              
             }
-            
+         
            </div> 
+           }
            </div>
         );
     }

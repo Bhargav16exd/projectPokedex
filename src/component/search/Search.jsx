@@ -1,7 +1,8 @@
 import './search.css'
 
-function Search (){
-
+function Search ({updateSearchTerm}){
+    
+   
     return(
         <div className="search-wrapper">
 
@@ -10,7 +11,7 @@ function Search (){
         type="text"
         placeholder="enter pokemon..." 
         id="search"
-        
+        onChange={(event)=> updateSearchTerm(event.target.value) } 
         />
 
         </div>

@@ -1,29 +1,49 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-function usePokeDetails (id){
+function usePokeDetails (id,dataName){
+ 
 
-    
     const [ pokeDetails ,setPokeDetails] = useState({
         pokemonData:{types:[]},
         load:true,
-        type:[]
+        type:[],
+        searchLoad:true
        })
       
        const caller = () =>{
-        
-        setPokeDetails((data)=>({
+       setPokeDetails((data)=>({
             ...data,
             load:false
         }))
 
-        }
+        } 
 
        async function getData(){
-        try {
+        let Data =null;
+        console.log("data value" , pokeDetails.searchLoad);
+        try {  
+            if(dataName){
+                Data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${dataName}/` )
+                if(Data){
+                    setPokeDetails((data)=>({
+                        ...data,
+                        searchLoad:false
+                    }))
+                }
 
-            const Data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
-             
+            }
+            else{
+                 Data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+                 if(Data){
+                    setPokeDetails((data)=>({
+                        ...data,
+                        searchLoad:false
+                    }))
+                }
+            }
+            
+            console.log("data value 2" , pokeDetails.searchLoad); 
             setPokeDetails((data)=>({
                 ...data,
                 pokemonData:{
@@ -54,7 +74,7 @@ function usePokeDetails (id){
 
        }
 
-       useEffect(()=>{ getData();}, [pokeDetails.type])
+       useEffect(()=>{ getData()}, [pokeDetails.type ,pokeDetails.searchLoad ])
 
     return [pokeDetails ,caller]
 }

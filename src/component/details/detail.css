@@ -43,3 +43,10 @@
 .Explorebtn:active{
     background-color: #fb8500;
 }
+
+.loadder{
+    position: relative;
+    left: 50%;
+    top: 50px;
+}
+  
