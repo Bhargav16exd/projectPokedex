@@ -1,9 +1,9 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+let x = 0;
 
-function usePokeDetails (id,dataName){
+ function usePokeDetails(id,dataName){
  
-
     const [ pokeDetails ,setPokeDetails] = useState({
         pokemonData:{types:[]},
         load:true,
@@ -20,8 +20,10 @@ function usePokeDetails (id,dataName){
         } 
 
        async function getData(){
+
+        console.log("function called",x++)
         let Data =null;
-        console.log("data value" , pokeDetails.searchLoad);
+    
         try {  
             if(dataName){
                 Data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${dataName}/` )
@@ -43,7 +45,7 @@ function usePokeDetails (id,dataName){
                 }
             }
             
-            console.log("data value 2" , pokeDetails.searchLoad); 
+            console.log()
             setPokeDetails((data)=>({
                 ...data,
                 pokemonData:{
@@ -51,31 +53,20 @@ function usePokeDetails (id,dataName){
                     image:Data.data.sprites.other.dream_world.front_default,
                     height:Data.data.height,
                     weight:Data.data.weight,
-                    types:Data.data.types.map((t)=> t.type.name)
-                }
+                    types: Data.data.types.map((t)=> t.type.name)
+                },
+                type:Data.data.types[0].type.name
             }))
             
-           }
+        }
         catch (error)
         {
           return("Cannot Fetch Data Try Again Later");
         }
-           
-          
-           if(pokeDetails.pokemonData.types){
-            console.log(`flag`)
-            setPokeDetails((data)=>({
-                ...data,
-                type:pokeDetails.pokemonData.types[0]
-            }))
-           }
-           console.log(pokeDetails.type)
-           
+}
 
-       }
-
-       useEffect(()=>{ getData()}, [pokeDetails.type ,pokeDetails.searchLoad ])
-
+    useEffect(()=>{ getData()},[])
+       
     return [pokeDetails ,caller]
 }
 
