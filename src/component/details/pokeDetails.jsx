@@ -12,7 +12,7 @@ import usePokeDetails from "../../hooks/usePokeDetails";
     
         return(
             
-           <div className="wrap-page">
+           <>
             
             {pokeDetails.searchLoad ? 
 
@@ -37,7 +37,7 @@ import usePokeDetails from "../../hooks/usePokeDetails";
          
            </div> 
            }
-           </div>
+           </>
         );
     }
 

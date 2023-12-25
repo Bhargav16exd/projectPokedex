@@ -45,7 +45,7 @@ let x = 0;
                 }
             }
             
-            console.log()
+            console.log(Data)
             setPokeDetails((data)=>({
                 ...data,
                 pokemonData:{
